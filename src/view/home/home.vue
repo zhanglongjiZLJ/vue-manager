@@ -55,7 +55,7 @@ export default {
   },
   computed:mapState(['all_info_list']),
   mounted(){
-    console.log(this.all_info_list)
+    let type
     Indicator.open({
       text: '加载中...',
       spinnerType: 'fading-circle'
@@ -63,54 +63,35 @@ export default {
     api.getLost().then(
       response => {
         for(let i = 0;i < response.data.length;i++){
-          this.home_info_list[0].children.unshift(response.data[i])
-        }
-        if(this.home_info_list[0].children.length){
           this.home_info_list[0].type = '失物信息'
-        }else{
-          this.home_info_list[0].type = ''
+          this.home_info_list[0].children.unshift(response.data[i])
         }
         api.getCourse().then(
           response => {
             for(let i = 0;i < response.data.length;i++){
+              this.home_info_list[1].type = '课程信息'
               this.home_info_list[1].children.unshift(response.data[i])
-            }
-            if(this.home_info_list[1].children.length){
-              this.home_info_list[1].type = '失物信息'
-            }else{
-              this.home_info_list[1].type = ''
             }
             api.getLayout().then(
               response => {
                 for(let i = 0;i < response.data.length;i++){
+                  this.home_info_list[2].type = '校园布局'
                   this.home_info_list[2].children.unshift(response.data[i])
-                }
-                if(this.home_info_list[2].children.length){
-                  this.home_info_list[2].type = '失物信息'
-                }else{
-                  this.home_info_list[2].type = ''
                 }
                 api.getWarn().then(
                   response => {
                     for(let i = 0;i < response.data.length;i++){
+                      this.home_info_list[3].type = '安全警告'
                       this.home_info_list[3].children.unshift(response.data[i])
-                    }
-                    if(this.home_info_list[3].children.length){
-                      this.home_info_list[3].type = '失物信息'
-                    }else{
-                      this.home_info_list[3].type = ''
                     }
                     api.getActivity().then(
                       response => {
                         for(let i = 0;i < response.data.length;i++){
+                          this.home_info_list[4].type = '活动信息'
                           this.home_info_list[4].children.unshift(response.data[i])
                         }
-                        if(this.home_info_list[4].children.length){
-                          this.home_info_list[4].type = '失物信息'
-                        }else{
-                          this.home_info_list[4].type = ''
-                        }
                         Indicator.close()
+                        console.log(this.home_info_list)
                         this.$store.commit('all_info_list', this.home_info_list)
                       }
                     ).catch(
